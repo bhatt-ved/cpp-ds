@@ -24,5 +24,5 @@ public:
 	int year() const;
 	int daysInMonth() const;
 	void operator += (const Logbook &rightlogbook);
-
+    void validateDay(int day) const;
 };

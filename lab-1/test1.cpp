@@ -6,12 +6,14 @@
 //
 //--------------------------------------------------------------------
 
-#include <iostream.h>
-#include <iomanip.h>
+#include <iostream>
+#include <iomanip>
 #include <process.h>
 #include "LOGBOOK.H"
 
-void main(void)
+using namespace std;
+
+int main(void)
 {
 	int m,y;
 	int d,v;
@@ -53,5 +55,8 @@ void main(void)
 			break;
 		}
 	}while(option);
+
+	return 0;
+
 }
 
