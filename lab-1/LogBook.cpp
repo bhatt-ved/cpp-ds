@@ -13,7 +13,7 @@ using namespace std;
 
 //--------------------------------------------------------------------
 
-Logbook :: Logbook(int month, int year=1998)        //Default year
+Logbook :: Logbook(int month, int year) 
 
 //Constructor. Allocates enough memory for the object.
 
