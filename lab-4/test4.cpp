@@ -6,35 +6,23 @@
 //
 //--------------------------------------------------------------------
 
-#include <iostream.h>
-#include "listarr.cpp"
+#include <iostream>
 
-void main()
+#include "listarr.cpp"   // Including cpp instead of header file..
+                         // This fixed the linking errors I was getting
+
+using namespace std;
+
+void help();
+
+int main()
 {
     List<char> testList(8);   // Test list
     char testElement;         // List element
     int n;                    // Position within list
     char cmd;                 // Input command
 
-    cout << endl << "Commands:" << endl;
-    cout << "  +x  : Insert x after the cursor" << endl;
-    cout << "  -   : Remove the element marked by the cursor" << endl;
-    cout << "  =x  : Replace the element marked by the cursor with x"
-         << endl;
-    cout << "  @   : Display the element marked by the cursor" << endl;
-    cout << "  <   : Go to the beginning of the list" << endl;
-    cout << "  >   : Go to the end of the list" << endl;
-    cout << "  N   : Go to the next element" << endl;
-    cout << "  P   : Go to the prior element" << endl;
-    cout << "  C   : Clear the list" << endl;
-    cout << "  E   : Empty list?" << endl;
-    cout << "  F   : Full list?" << endl;
-    cout << "  M n : Move element marked by cursor to pos. n "
-         << " (Inactive : In-lab Ex. 2)" << endl;
-    cout << "  ?x  : Search rest of list for x               "
-         << " (Inactive : In-lab Ex. 3)" << endl;
-    cout << "  Q   : Quit the test program" << endl;
-    cout << endl;
+    help();
 
     do
     {
@@ -127,10 +115,11 @@ void main()
                break;
 
           case '?' :                              // In-lab Exercise 3
-               if ( testList.find(testElement) )
-                  cout << "Found" << endl;
+               n = testList.find(testElement);
+               if (n == -1)
+                  cout << "NOT Found" << endl;
                else
-                  cout << "NOT found" << endl;
+                  cout << "Found at " << n << endl;
                break;
 
           case 'Q' : case 'q' :                   // Quit test program
@@ -138,7 +127,32 @@ void main()
 
           default :                               // Invalid command
                cout << "Inactive or invalid command" << endl;
+               help();
         }
     }
     while ( cmd != 'Q'  &&  cmd != 'q' );
+    return 0;
+}
+
+void help()
+{
+    cout << endl << "Commands:" << endl;
+    cout << "  +x  : Insert x after the cursor" << endl;
+    cout << "  -   : Remove the element marked by the cursor" << endl;
+    cout << "  =x  : Replace the element marked by the cursor with x"
+         << endl;
+    cout << "  @   : Display the element marked by the cursor" << endl;
+    cout << "  <   : Go to the beginning of the list" << endl;
+    cout << "  >   : Go to the end of the list" << endl;
+    cout << "  N   : Go to the next element" << endl;
+    cout << "  P   : Go to the prior element" << endl;
+    cout << "  C   : Clear the list" << endl;
+    cout << "  E   : Empty list?" << endl;
+    cout << "  F   : Full list?" << endl;
+    cout << "  M n : Move element marked by cursor to pos. n "
+         << " (Inactive : In-lab Ex. 2)" << endl;
+    cout << "  ?x  : Search rest of list for x               "
+         << " (Inactive : In-lab Ex. 3)" << endl;
+    cout << "  Q   : Quit the test program" << endl;
+    cout << endl;
 }

@@ -53,6 +53,6 @@ public:
     // In-lab operations
 
     void moveToNth ( int n );                // Move element to pos. n
-    int find ( const LE &searchElement );    // Find element
+    int find ( const LE &searchElement ) const;    // Find element
     void showDNAStructure(void) const;
 };

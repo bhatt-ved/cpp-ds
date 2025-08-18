@@ -1,5 +1,5 @@
-#include <iostream.h>
-#include <stdlib.h>
+#include <iostream>
+#include <stdlib>
 #include <time.h>
 #include "listarr.h"
 
@@ -35,7 +35,7 @@ void main ()
 
 	for(int i=0; i<1000; i++)
 	{
-		rndno = rand();       //generates random number betn. 1-25
+		rndno = (rand() % 25) + 1;       //generates random number betn. 1-25
 
 		//puts a,g,c or t on the bases of certain logic
 

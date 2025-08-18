@@ -7,8 +7,11 @@
 //
 //--------------------------------------------------------------------
 
-#include <assert.h>
+#include <iostream>
+
 #include "listarr.h"
+
+using namespace std;
 
 //--------------------------------------------------------------------
 
@@ -19,6 +22,11 @@ List<LE>:: List ( int maxNumber )
 // elements (defaults to defMaxListSize).
 
 {
+    maxSize = maxNumber;
+    size = 0;
+    cursor = -1;
+    
+    element = new LE[maxSize];
 }
 
 //--------------------------------------------------------------------
@@ -29,6 +37,7 @@ List<LE>:: ~List ()
 // Frees the memory used by a list.
 
 {
+    delete element;
 }
 
 //--------------------------------------------------------------------
@@ -41,6 +50,17 @@ void List<LE>:: insert ( const LE &newElement )
 // In either case, moves the cursor to newElement.
 
 {
+      
+    if (full() == 1) 
+        cout << "List is full. Could not add.\n";
+    else {
+        if (empty() == 1)
+            cursor = 0;
+
+        element[size] = newElement;
+        size += 1;
+    } 
+        
 }
 
 //--------------------------------------------------------------------
@@ -53,6 +73,14 @@ void List<LE>:: remove ()
 // element "follows" the last list element.
 
 {
+
+    if (empty() == 0) { 
+        while (cursor < (size - 1)) {
+            element[cursor] = element[cursor + 1];
+            cursor += 1;
+        }
+    }
+
 }
 
 //--------------------------------------------------------------------
@@ -64,6 +92,8 @@ void List<LE>:: replace ( const LE &newElement )
 // leaves the cursor at newElement.
 
 {
+    if (empty() == 0)
+        element[cursor] = newElement;
 }
 
 //--------------------------------------------------------------------
@@ -74,6 +104,10 @@ void List<LE>:: clear ()
 // Removes all the elements from a list.
 
 {
+    if (empty() == 0) {  // If not empty
+        cursor = -1;
+        size = 0;
+    }
 }
 
 //--------------------------------------------------------------------
@@ -84,6 +118,7 @@ int List<LE>:: empty () const
 // Returns 1 if a list is empty. Otherwise, returns 0.
 
 {
+    return (size == 0) ? 1 : 0;
 }
 
 //--------------------------------------------------------------------
@@ -94,6 +129,7 @@ int List<LE>:: full () const
 // Returns 1 if a list is full. Otherwise, returns 0.
 
 {
+    return (size == maxSize) ? 1 : 0;
 }
 
 //--------------------------------------------------------------------
@@ -105,6 +141,12 @@ int List<LE>:: gotoBeginning ()
 // the list and returns 1. Otherwise, returns 0.
 
 {
+    if (empty() == 1)
+        return 0;
+    else {
+        cursor = 0;
+        return 1;
+    }
 }
 
 //--------------------------------------------------------------------
@@ -116,6 +158,12 @@ int List<LE>:: gotoEnd ()
 // list and returns 1. Otherwise, returns 0.
 
 {
+    if (empty() == 1)
+        return 0;
+    else {
+        cursor = size - 1;
+        return 1;
+    }
 }
 
 //--------------------------------------------------------------------
@@ -128,6 +176,12 @@ int List<LE>:: gotoNext ()
 // Otherwise returns 0.
 
 {
+    if ((empty() == 0) && (cursor != (size - 1))) { 
+        cursor += 1;
+        return 1;
+    }
+    else
+        return 0;
 }
 
 //--------------------------------------------------------------------
@@ -139,6 +193,14 @@ int List<LE>:: gotoPrior ()
 // empty, then decrements the cursor and returns 1. Otherwise returns 0
 
 {
+
+    if ((empty() == 0) && (cursor != 0)) {
+        cursor -= 1;
+        return 1;
+    }
+    else
+        return 0;
+
 }
 
 //--------------------------------------------------------------------
@@ -149,6 +211,7 @@ LE List<LE>:: getCursor () const
 // Returns the element marked by the cursor.
 
 {
+    return element[cursor];
 }
 
 
@@ -164,20 +227,40 @@ void List<LE>:: moveToNth ( int n )
 // cursor to the new position of the moved element.
 
 {
+
+    if (empty() == 1)
+        cout << "Error! List is empty. \n";
+    else if (n >= size)
+        cout << "Index out of list range. \n";
+    else {
+        LE temp = element[n];
+        element[n] = element[cursor];
+        element[cursor] = temp;
+    }
 }
 
 
 //----------------------------------------------------------------------------
 
 template < class LE >
-int List<LE> :: find ( const LE &searchElement )
+int List<LE> :: find ( const LE &searchElement ) const
 
-// Searches a list for searchElement. Begins the search with the
-// element marked by the cursor. Moves the cursor through the list
-// until either searchElement is found (returns 1) or the end of the
-// list is reached (returns 0).
+// Searches a list for searchElement. Starts from beggining of list
+// until either searchElement is found (returns first occurence of
+// searchElement in the list) or the end of the list is reached 
+// (returns -1).
 
 {
+
+    if (empty() == 1)
+        return -1;
+    else {
+        for (int i = 0; i < size; i++) {
+            if (element[i] == searchElement)
+                return i;
+        } 
+        return -1;
+    }
 }
 
 //-------------------------------------------------------------------
@@ -190,4 +273,16 @@ void List<LE>:: showStructure () const
 // purposes only.
 
 {
+    if (empty() == 1)
+        cout << "List is empty\n";
+    else {
+        cout << "| ";
+        for (int i = 0; i < size; i++)
+            cout << element[i] << " | ";
+        cout << "\n  ";
+        for (int i = 0; i < cursor; i++)
+            cout << "    ";
+        cout << "^" << endl;
+    }
+    cout << "Size: " << size << ", Cursor: " << cursor << endl;
 }
