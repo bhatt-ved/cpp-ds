@@ -1,7 +1,7 @@
 #include <iostream>
-#include <stdlib>
+//#include <stdlib>
 #include <time.h>
-#include "listarr.h"
+#include "listarr.cpp"
 
 //--------------------------------------------------------------------
 //
@@ -17,7 +17,7 @@ void countBases ( List<char> &dnaSequence,
 //--------------------------------------------------------------------
 
 
-void main ()
+int main ()
 {
     List<char> dnaSequence(1000);   // DNA sequence (1000 bases max.)
     int aCount,                   // Number of A's in the sequence
@@ -26,7 +26,7 @@ void main ()
         gCount,	                	// Number of G's in the sequence
 		rndno ;                    
 
-	cout << "Randorm DNA sequence :\n";
+	cout << "Random DNA sequence :\n";
 
 	/* Seed the random-number generator with current time so that
      * the numbers will be different every time we run.        */
@@ -81,7 +81,7 @@ void main ()
 	if(aCount == gCount && tCount == cCount)
 		cout << "Wow ! A valid DNA sequence through random generation !\n";
 
-
+    return 0;
 }
 
 void countBases ( List<char> &dnaSequence,
