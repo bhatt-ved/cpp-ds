@@ -7,7 +7,7 @@
 //
 //--------------------------------------------------------------------
 
-#include <iostream.h>
+
 
 template <class SE>
 class Stack;
@@ -58,5 +58,6 @@ class Stack
   private:
 
     // Data member
-    StackNode<SE> *top;   // Pointer to the top element
+    StackNode<SE> *root;   // Pointer to the root element
+    StackNode<SE> *top;    // Pointer to the top element
 };

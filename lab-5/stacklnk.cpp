@@ -21,6 +21,10 @@ Stack<SE> :: Stack(int ignored)
 //Constructor. Creates an empty stack
 
 {
+
+    root = nullptr;
+    top = nullptr;
+
 }
 
 //-------------------------------------------------------------------
@@ -31,6 +35,9 @@ Stack<SE> :: ~Stack()
 //Destructor. Deallocates all the memory assigned to the stack nodes.
 
 {
+
+    delete root;
+
 }
 
 //------------------------------------------------------------------
@@ -41,6 +48,17 @@ void Stack<SE> :: push(const SE &newElement)
 //Pushes new element on the top of the stack if stack is not full
 
 {
+    
+    if (full() == 0){ 
+        if (empty() == 1) {
+            root = newNode;
+            top = newNode;
+        }
+        else {
+            top->next = newNode;
+            top = newNode;
+    }
+
 }
 
 //------------------------------------------------------------------
@@ -51,6 +69,22 @@ SE Stack<SE> :: pop()
 //Pops the top element of the stack, returns it and distroys it if stack is not empty
 
 {
+    if (empty() == 0) {
+        SE returnVal = top->element;
+        if (root = top) { 
+            delete top;
+            root = nullptr;
+            top = nullptr;
+        }
+        else {
+            StackNode<SE>* cur = root;
+            while (cur->next != top) 
+                cur = cur->next;
+            delete top;
+            top = cur;
+            top->next = nullptr;
+        }                    
+    return returnVal;
 }
 
 //------------------------------------------------------------------
@@ -61,6 +95,11 @@ void Stack<SE> :: clear()
 //Clears the stack.
 
 {
+
+    while (empty() == 0)
+        pop();
+
+
 }
 
 //------------------------------------------------------------------
@@ -72,6 +111,12 @@ int Stack<SE> :: empty() const
 //Returns 1 if stack is empty. Otherwise returns 0
 
 {
+
+    if (root == nullptr)
+        return 1;
+    else
+        return 0;
+
 }
 
 //------------------------------------------------------------------
@@ -82,6 +127,9 @@ int Stack<SE> :: full() const
 //Returns 1 if stack is full. Otherwise returns 0
 
 {
+
+    return 0;    
+
 }
 
 //------------------------------------------------------------------
@@ -115,6 +163,10 @@ StackNode<SE> :: StackNode ( const SE &elem, StackNode *nextPtr )
 //Constructor for stacknode class.
 
 {
+
+    element = elem;
+    next = nextPtr;
+
 }
 
-//------------------------------------------------------------------
+//------    ------------------------------------------------------------

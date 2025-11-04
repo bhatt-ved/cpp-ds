@@ -19,6 +19,10 @@ Queue <QE>:: Queue (int ignored)
 //queue is ignored.
 
 {
+
+    front = nullptr;
+    rear = nullptr;
+
 }
 
 //--------------------------------------------------------------------
@@ -29,6 +33,9 @@ Queue <QE>:: ~Queue ()
 //Destructor. Deletes all the memory allocated to the queue.
 
 {
+
+    delete front;
+
 }
 
 //--------------------------------------------------------------------
@@ -40,7 +47,21 @@ void Queue <QE>:: enqueue( const QE &newElement)
 //Creates a new node for newElement and inseret it at the rear.
 
 {
+
+    if (full() == 0) {
+        QE newNode;
+        newNode->element = newElement;
+        newNode->next = nullptr;
+        if (rear == nullptr){
+            rear = front = newNode;
+        }
+        else {
+            rear->next = newNode;
+            rear = newNode;
+        }
+    }
 }
+
 
 //--------------------------------------------------------------------
 
@@ -51,6 +72,17 @@ QE Queue <QE>:: dequeue()
 //returns it.
 
 {
+
+    if (empty() == 0) { 
+        if (front == rear) { 
+            front = rear = nullptr;
+        }
+        else { 
+            QueueNode<QE> *temp = front;
+            front = front->next;
+            delete temp;
+        }
+    }
 }
 
 //--------------------------------------------------------------------
@@ -118,6 +150,10 @@ QueueNode<QE> :: QueueNode ( const QE &elem, QueueNode *nextPtr )
 //Constructor for queue node.
 
 {
+
+    element = elem;
+    next = nextPtr;    
+
 }
 
 //--------------------------------------------------------------------
