@@ -146,14 +146,14 @@ void Queue<QE>:: showStructure () const
        cout << "Empty queue" << endl;
     else
     {
-       cout << "rear ";
+       cout << "front ";
 	   p = front;
 	   while(p)
 	   {
 		   cout << p->element << " ";
 		   p = p->next;
 	   }
-       cout << "front" << endl;
+       cout << "rear" << endl;
     }
 }
 
