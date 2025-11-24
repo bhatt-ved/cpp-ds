@@ -7,8 +7,11 @@
 //
 //--------------------------------------------------------------------
 
-#include "queuelnk.h"
 #include <stdlib.h>			//for exit function
+#include <cassert>
+#include "queuelnk.h"
+
+using namespace std;
 
 //--------------------------------------------------------------------
 
@@ -34,7 +37,7 @@ Queue <QE>:: ~Queue ()
 
 {
 
-    delete front;
+    clear();
 
 }
 
@@ -49,9 +52,7 @@ void Queue <QE>:: enqueue( const QE &newElement)
 {
 
     if (full() == 0) {
-        QE newNode;
-        newNode->element = newElement;
-        newNode->next = nullptr;
+        QueueNode<QE> *newNode = new QueueNode<QE>(newElement, nullptr);
         if (rear == nullptr){
             rear = front = newNode;
         }
@@ -72,17 +73,17 @@ QE Queue <QE>:: dequeue()
 //returns it.
 
 {
-
-    if (empty() == 0) { 
-        if (front == rear) { 
-            front = rear = nullptr;
-        }
-        else { 
-            QueueNode<QE> *temp = front;
-            front = front->next;
-            delete temp;
-        }
+    assert(empty() == 0);
+    QE returnVal = front->element; 
+    if (front == rear) { 
+        front = rear = nullptr;
     }
+    else { 
+        QueueNode<QE> *temp = front;
+        front = front->next;
+        delete temp;
+    }
+    return returnVal;
 }
 
 //--------------------------------------------------------------------
@@ -93,6 +94,10 @@ void Queue <QE>:: clear()
 //Removes all the elements in a queue.
 
 {
+
+    while(empty() == 0)
+        dequeue();
+
 }
 		
 //--------------------------------------------------------------------
@@ -103,6 +108,13 @@ int Queue <QE>:: empty() const
 //Returns 1 if queue is empty. Otherwise retuns 0.
 
 {
+
+    if(rear == nullptr && front == nullptr){
+        return 1;
+    }
+    else{
+        return 0;
+    }
 }
 
 //--------------------------------------------------------------------
@@ -110,9 +122,12 @@ int Queue <QE>:: empty() const
 template < class QE >
 int Queue <QE>:: full() const
 
-//Returns 1 if queue is empty. Otherwise retuns 0.
+//Returns 1 if queue is full. Otherwise retuns 0.
 
 {
+
+    return 0;
+
 }
 
 //--------------------------------------------------------------------
@@ -132,7 +147,7 @@ void Queue<QE>:: showStructure () const
     else
     {
        cout << "rear ";
-	   p = rear;
+	   p = front;
 	   while(p)
 	   {
 		   cout << p->element << " ";
@@ -165,4 +180,12 @@ int Queue<QE>:: length() const
 //It returns the length of the queue.
 
 {
+
+    int len = 0;
+    QueueNode<QE> *cur = front;
+    while (cur != nullptr) {
+        len += 1;
+        cur = cur->next;
+    }
+    return len;
 }

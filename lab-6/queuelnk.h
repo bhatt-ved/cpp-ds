@@ -6,7 +6,7 @@
 //  Queue ADT
 //
 //--------------------------------------------------------------------
-#include <iostream.h>
+#include <iostream>
 
 template < class QE>
 class Queue;

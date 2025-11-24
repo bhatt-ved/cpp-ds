@@ -5,13 +5,14 @@
 //  Member-Function definitions for the linked list implementation of the
 //  Stack ADT
 //
-//  Programmer : Mehul Bhatt			ID : 999-28-3852
-//
 //--------------------------------------------------------------------
 
 
 #include <stdlib.h>
+#include <cassert>
 #include "stacklnk.h"
+
+using namespace std;
 
 //-------------------------------------------------------------------
 
@@ -36,7 +37,7 @@ Stack<SE> :: ~Stack()
 
 {
 
-    delete root;
+    clear();
 
 }
 
@@ -49,14 +50,18 @@ void Stack<SE> :: push(const SE &newElement)
 
 {
     
-    if (full() == 0){ 
+    if (full() == 0){
+        StackNode<SE> *newNode = new StackNode<SE>(newElement, nullptr);
+        
         if (empty() == 1) {
+            cout << "Reached empty" << endl;
             root = newNode;
             top = newNode;
         }
         else {
             top->next = newNode;
             top = newNode;
+        }
     }
 
 }
@@ -69,21 +74,22 @@ SE Stack<SE> :: pop()
 //Pops the top element of the stack, returns it and distroys it if stack is not empty
 
 {
-    if (empty() == 0) {
-        SE returnVal = top->element;
-        if (root = top) { 
-            delete top;
-            root = nullptr;
-            top = nullptr;
-        }
-        else {
-            StackNode<SE>* cur = root;
-            while (cur->next != top) 
-                cur = cur->next;
-            delete top;
-            top = cur;
-            top->next = nullptr;
-        }                    
+    //pop() must not be called on an empty list
+    assert(empty() == 0);
+    SE returnVal = top->element;
+    if (root == top) {
+        delete top; 
+        root = nullptr;
+        top = nullptr;
+    }
+    else {
+        StackNode<SE> *cur = root;
+        while (cur->next != top) 
+            cur = cur->next;
+        delete top;
+        top = cur;
+        top->next = nullptr;
+    }                    
     return returnVal;
 }
 
@@ -149,7 +155,7 @@ void Stack<SE>:: showStructure () const
     else
     {
        cout << "top ";
-       for ( p = top ; p != 0 ; p = p->next )
+       for ( p = root ; p != 0 ; p = p->next )
            cout << p->element << " ";
        cout << "bottom" << endl;
     }

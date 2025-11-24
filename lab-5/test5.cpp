@@ -7,7 +7,7 @@
 //--------------------------------------------------------------------
 
 #include <iostream>
-#include "stackarr.cpp"		//Should include stackarr.cpp if array
+#include "stacklnk.cpp"		//Should include stackarr.cpp if array
 				        	//version is to be used.
 using namespace std;
 

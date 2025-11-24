@@ -6,10 +6,12 @@
 //
 //--------------------------------------------------------------------
 
-#include <iostream.h>
+#include <iostream>
 #include "queuelnk.cpp"
 
-void main()
+using namespace std;
+
+int main()
 {
     Queue<char> testQueue(8);   // Test queue
     char testElement;           // Queue element
@@ -73,7 +75,7 @@ void main()
         }
     }
     while ( cmd != 'Q'  &&  cmd != 'q' );
-
+    return 0;
 }
 
 void commands(void)
