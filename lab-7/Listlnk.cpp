@@ -125,21 +125,7 @@ void List<LE> :: replace (const LE &newElement)
 //remains at newElement.
 {
     if(!empty()) {
-        ListNode<LE> *temp = cursor;
-        ListNode<LE> *newNode = new ListNode<LE>(newElement, cursor->next);
-        
-        if(counter == 1) {
-            head = newNode;
-        }
-        else {
-            ListNode<LE> *prev = head;
-            while (prev->next != cursor) {
-                prev = prev->next;
-            }
-            prev->next = newNode;
-        }
-        cursor = newNode;
-        delete temp;
+        cursor->element = newElement;
     }
 }
 
@@ -215,9 +201,8 @@ int List<LE> :: gotoEnd(void)
 
 {
     if(!empty()) { 
-        while(cursor->next != nullptr) {
+        while(cursor->next != nullptr)
             cursor = cursor->next;
-        }
         return 1;
     }
     else
@@ -323,14 +308,11 @@ void List<LE> :: moveToBeginning(void)
 //it at the beginning of the list. Moves the cursor to the beginning.
 
 {
-    if (!empty()) {
-        ListNode<LE> *newNode = new ListNode<LE>(cursor->element, head);
-        if (cursor != head) { 
-            remove();
-            counter += 1;
-            head = newNode;
-            cursor = head;
-        }
+    if (!empty() && (cursor != head)) {
+        LE temp = cursor->element;
+        cursor->element = head->element;
+        head->element = temp;
+        cursor = head;
     }
 }
 
@@ -345,32 +327,16 @@ void List<LE> :: insertBefore(const LE &newElement)
 //newElement.
 
 {
-    if(!full()) {
-        if(!empty()) {
-            ListNode<LE> *prev = head;
-            ListNode<LE> *newNode = new ListNode<LE>(newElement, nullptr);
-            if (counter == 1) { 
-                newNode->next = head;
-                head = newNode;
-                cursor = newNode;
-                counter += 1;
-            }
-            else {
-                if (gotoPrior()) 
-                    insert(newElement);
-                else {
-                    if (cursor == head){
-                        newNode->next = head;
-                        head = newNode;
-                        cursor = newNode;
-                        counter += 1;
-                    }
-                    else
-                        cout << "Should never reach here" << endl;
-                }
-            }
-        }
-        else
-            insert(newElement);
+    if(full())
+        return;
+    if (gotoPrior()) {
+        // List not empty and cursor != head
+        insert(newElement);
+    } else {
+        ListNode<LE> *newNode = new ListNode<LE>(newElement, nullptr);
+        newNode->next = head;
+        head = newNode;
+        cursor = newNode;
+        counter += 1;
     }
 }
