@@ -2,6 +2,10 @@
 //
 //  Laboratory 9                                           listord.cpp
 //
+
+
+
+
 //  Member function definition for the array implementation of the  
 //  Ordered List ADT 
 //
@@ -19,9 +23,6 @@ OrdList<LE,KF> :: OrdList (int maxNumber)
 
 : List<LE> (maxNumber)
 {
-
-    
-
 }
 
 //--------------------------------------------------------------------
@@ -35,21 +36,21 @@ void OrdList<LE,KF> ::  insert (const LE &newElement)
 //fields. Moves the cursor to newElement.
 
 {
-
     assert(!empty());
-
+    
+    int index;
+    
     if (binarySearch(newElement.key(), index)) {
-        element[index] = newElement;
+        this->element[index] = newElement;
     } else {
         if (!full()) {
-            for (int i = size, i > index, i--) {
-                element[i] = element[i-1];
+            for (int i = this->size; i > index; i--) {
+                this->element[i] = this->element[i-1];
             }
-            element[index] = newElement;
-            size += 1;
+            this->element[index] = newElement;
+            this->size += 1;
         }
-
-
+    }
 }
 	
 //--------------------------------------------------------------------
@@ -63,7 +64,8 @@ void OrdList<LE,KF>::  replace (const LE &newElement)
 
 {
 
-    cursor->elem = newElement;
+    List<LE>::remove();
+    insert(newElement);
 
 }
 
@@ -80,13 +82,15 @@ int OrdList<LE,KF>::  retrieve (KF searchKey, LE &searchElement)
 {
 
     assert(!empty());
+    
+    int index;
+    
+    if (binarySearch(searchKey, index)) {
 
-    if (binarySearch(newElement.key(), index)) {
-        while (cursor->elem != element[index]) {
-            cursor += 1;
-        }
-        searchElement = element[index];
+        this->cursor = index;
+        searchElement = this->element[index];
         return 1;
+
     } else
         return 0;
 
@@ -107,18 +111,18 @@ int OrdList<LE,KF>::  binarySearch (KF searchKey, int &index)
     assert(!empty());
 
     int bottom = 0;
-    int top = size - 1;
+    int top = this->size - 1;
     int mid;
     
     while(bottom <= top) {
         mid = (bottom+top) / 2; 
         
-        if (searchKey == element[mid].key()){
+        if (searchKey == this->element[mid].key()){
             index = mid;
             return 1;
         }
         else {
-            if (searchKey > element[mid].key())
+            if (searchKey > this->element[mid].key())
                 bottom = mid + 1; 
             else
                 top = mid - 1;
@@ -139,17 +143,17 @@ void OrdList<LE,KF>:: showStructure () const
 {
     int j;   // Loop counter
 
-    if ( size == 0 )
+    if ( this->size == 0 )
        cout << "Empty list" << endl;
     else
     {
-       cout << "size = " << size
-            <<  "   cursor = " << cursor << endl;
-       for ( j = 0 ; j < maxSize ; j++ )
+       cout << "size = " << this->size
+            <<  "   cursor = " << this->cursor << endl;
+       for ( j = 0 ; j < this->maxSize ; j++ )
            cout << j << "\t";
        cout << endl;
-       for ( j = 0 ; j < size ; j++ )
-           cout << element[j].key() << "\t";
+       for ( j = 0 ; j < this->size ; j++ )
+           cout << this->element[j].key() << "\t";
        cout << endl;
     }
 }
@@ -161,4 +165,9 @@ void OrdList<LE,KF>:: merge (OrdList &a)
 //Merges this array and sorted array a and puts result in this array.
 
 {
+    if(a.gotoBeginning()) {
+        do {
+            insert(a.getCursor());
+        } while(a.gotoNext() == 1);
+    }
 }

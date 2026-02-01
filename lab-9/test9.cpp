@@ -6,7 +6,7 @@
 //
 //--------------------------------------------------------------------
 
-#include <iostream.h>
+#include <iostream>
 #include "listord.cpp"
 
 //--------------------------------------------------------------------
@@ -31,7 +31,7 @@ class TestData
 
 //--------------------------------------------------------------------
 
-void main()
+int main()
 {
     OrdList<TestData,int> testList(8);  // Test list
     TestData testElement;               // List element
@@ -148,6 +148,7 @@ void main()
 
     }
     while ( ( cmd != 'Q' ) && ( cmd != 'q' ) );
+    return 0;
 }
 
 //-------------------------------------------------------------------
