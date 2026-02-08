@@ -28,29 +28,24 @@ OrdList<LE,KF> :: OrdList (int maxNumber)
 //--------------------------------------------------------------------
 
 template < class LE, class KF >
-void OrdList<LE,KF> ::  insert (const LE &newElement)  
+void OrdList<LE,KF> ::  insert (const LE &newElement)
+ //fields. Moves the cursor to newElement.
 
-//Inserts a newelement in its appropreate position within a list.
-//If an element with the same key as newElement already exists in the list, 
-//then updates that element's nonkey fields with newElements's nonkey
-//fields. Moves the cursor to newElement.
+ {
+     assert(!empty());
+     assert(!List<LE>::empty());
 
-{
-    assert(!empty());
-    
-    int index;
-    
-    if (binarySearch(newElement.key(), index)) {
-        this->element[index] = newElement;
-    } else {
-        if (!full()) {
-            for (int i = this->size; i > index; i--) {
-                this->element[i] = this->element[i-1];
-            }
-            this->element[index] = newElement;
-            this->size += 1;
-        }
-    }
+     int index;
+
+     if (binarySearch(newElement.key(), index)) {
+         this->element[index] = newElement;
+     } else {
+         if (!full()) {
+         if (!List<LE>::full()) {
+             for (int i = this->size; i > index; i--) {
+                 this->element[i] = this->element[i-1];
+             }
+
 }
 	
 //--------------------------------------------------------------------
@@ -108,7 +103,7 @@ int OrdList<LE,KF>::  binarySearch (KF searchKey, int &index)
 
 {
 
-    assert(!empty());
+    assert(!List<LE>::empty());
 
     int bottom = 0;
     int top = this->size - 1;
@@ -128,6 +123,7 @@ int OrdList<LE,KF>::  binarySearch (KF searchKey, int &index)
                 top = mid - 1;
         }
     }
+    bottom = index;
     return 0;
 }
  
