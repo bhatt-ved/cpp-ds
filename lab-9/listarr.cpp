@@ -197,22 +197,16 @@ int List<LE>:: gotoPrior ()
 // If the cursor is not at the beginning of a list, then moves the
 // cursor to the preceeding element in the list and returns 1. If
 // cursor is at the beginning of the list, then moves it to the end
-// of list and returns 1.
+// of listreturns 1.
 // Otherwise, returns 0.
 
 {
-   if (!empty())
-   {
-
-		if ( cursor != 0 )
-			cursor--;
-		else if( cursor == 0)
-			cursor = size - 1;
-
-		return 1;
-	}
-   else
-      return 0;
+    if (empty() || cursor == 0)
+   		return 0;
+    else {
+        cursor--;
+        return 1;
+    }
 }
 
 //--------------------------------------------------------------------

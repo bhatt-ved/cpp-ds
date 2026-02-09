@@ -2,10 +2,6 @@
 //
 //  Laboratory 9                                           listord.cpp
 //
-
-
-
-
 //  Member function definition for the array implementation of the  
 //  Ordered List ADT 
 //
@@ -31,21 +27,21 @@ template < class LE, class KF >
 void OrdList<LE,KF> ::  insert (const LE &newElement)
  //fields. Moves the cursor to newElement.
 
- {
-     assert(!empty());
-     assert(!List<LE>::empty());
-
+{
+     assert(!List<LE>::full());
+    
      int index;
 
      if (binarySearch(newElement.key(), index)) {
          this->element[index] = newElement;
      } else {
-         if (!full()) {
-         if (!List<LE>::full()) {
-             for (int i = this->size; i > index; i--) {
-                 this->element[i] = this->element[i-1];
-             }
-
+        for (int i = this->size; i > index; i--) {
+            this->element[i] = this->element[i-1];
+        }
+        this->element[index] = newElement;
+        this->size++;
+    }
+    this->cursor = index;
 }
 	
 //--------------------------------------------------------------------
@@ -75,20 +71,15 @@ int OrdList<LE,KF>::  retrieve (KF searchKey, LE &searchElement)
 //cursor and with searchElement undefined.
 
 {
-
-    assert(!empty());
-    
     int index;
-    
+ 
     if (binarySearch(searchKey, index)) {
-
         this->cursor = index;
         searchElement = this->element[index];
         return 1;
 
     } else
         return 0;
-
 }
 
 //--------------------------------------------------------------------
@@ -99,12 +90,15 @@ int OrdList<LE,KF>::  binarySearch (KF searchKey, int &index)
 // Locates an element (or where it should be) based on its key
 // Returns 1 if element is found, otherwise returns 0.
 // If element is not found, then returns the position of next element 
-// to be inserted in the field 'inded'
+// to be inserted in the field 'index'
 
 {
 
-    assert(!List<LE>::empty());
-
+    if (List<LE>::empty()) {
+        index = 0;
+        return 0;
+    }
+    
     int bottom = 0;
     int top = this->size - 1;
     int mid;
@@ -123,7 +117,10 @@ int OrdList<LE,KF>::  binarySearch (KF searchKey, int &index)
                 top = mid - 1;
         }
     }
-    bottom = index;
+    if (this->element[mid].key() < searchKey) 
+        index = mid + 1;
+    else
+        index = mid;
     return 0;
 }
  
