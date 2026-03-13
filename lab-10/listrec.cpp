@@ -481,6 +481,12 @@ void List<LE>:: unknown1Sub ( ListNode<LE> *p ) const
 // Recursive partner of the unknown1() function.
 
 {
+
+    if(p!= 0) {
+        unknown1Sub(p->next);
+        cout << p->element;
+    }
+
 }
 
 //--------------------------------------------------------------------
@@ -502,6 +508,16 @@ void List<LE>:: unknown2Sub ( ListNode<LE> *&p )
 // Recursive partner of the unknown2() function.
 
 {
+
+    if (p == 0 || p->next == 0)
+        return;
+    
+    ListNode<LE> *cur_del = p->next;
+    p->next = cur_del->next;
+    delete cur_del;
+    counter -= 1;
+    unknown2Sub(p->next);
+
 }
 
 //-------------------IN LAB EXERCISE : 1A----------------------------
@@ -605,7 +621,7 @@ void List<LE> :: aBeforebSub ( ListNode<LE> *&p)
         ListNode<LE> *temp = new ListNode<LE>('a', p->next);
         p->next = temp;
         this->counter += 1;
-        aBeforebSub(p->next);
+        aBeforebSub(temp->next);
     } else {
         aBeforebSub(p->next);
     }
