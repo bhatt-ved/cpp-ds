@@ -1,11 +1,14 @@
-#include <iostream.h>
+#include <iostream>
+
+using namespace std;
+
 int counter = 0;
 
 int main()
 {
-	int n;
-	int fibo (int n);
-	int iterFibo (int n);
+	unsigned long n;
+	unsigned long fibo (unsigned long n);
+	unsigned long iterFibo (unsigned long n);
 
 	do
 	{
@@ -22,27 +25,28 @@ int main()
 		}
 
 		else
-			cout << "Position should be any positive integer\n";
+			cout << "Position should be any integer\n";
 
 	}while(n);
 
 	return 0;
 }
 
-int fibo(int n)
+unsigned long fibo(unsigned long n)
 {
 	
-	cout << ++counter << ". Calling myself\n";
-	if(n==1 || n==2)
+	//cout << ++counter << ". Calling myself\n";
+	counter ++;
+    if(n==1 || n==2)
 		return 1;
 
 	else
 		return (fibo(n-1) + fibo(n-2));
 }
 
-int iterFibo(int n)
+unsigned long iterFibo(unsigned long n)
 {
-	int i=1,j=1,k;
+	unsigned long i=1,j=1,k;
 	counter = 0;
 
 	if(n==1 || n==2)
@@ -52,8 +56,9 @@ int iterFibo(int n)
 	{
 		for(;n!=2;n--)
 		{
-			cout << ++counter << ".Executing loop\n";
-			k = i + j;
+			//cout << ++counter << ".Executing loop\n";
+			counter ++;
+            k = i + j;
 			i = j;
 			j = k;
 		}

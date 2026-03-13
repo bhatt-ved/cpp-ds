@@ -362,10 +362,11 @@ void List<LE>:: writeMirrorSub ( ListNode<LE> *p ) const
 {
 
     assert(!empty());
-    cout << p->element;
-    writeMirrorSub(p->next);
-    cout << p->element;
-
+    if (p != 0) {
+        cout << p->element;
+        writeMirrorSub(p->next);
+        cout << p->element;
+    }
 }
 
 //--------------------------------------------------------------------
