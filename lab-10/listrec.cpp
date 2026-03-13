@@ -361,23 +361,11 @@ void List<LE>:: writeMirrorSub ( ListNode<LE> *p ) const
 
 {
 
-    bool forward = true;
-    if (p != 0) {
-        if (forward) {
-            if (p->next != 0) {  
-                cout << p;
-                writeMirrorSub(p->next); 
-            } else {
-                cout << p;
-                forward = false;
-            }
-        } else {
-            if (p != 0) {
-                cout << p;
-                writeMirrorSub(p->prev);
-            }
-        }
-    }
+    assert(!empty());
+    cout << p->element;
+    writeMirrorSub(p->next);
+    cout << p->element;
+
 }
 
 //--------------------------------------------------------------------
@@ -401,12 +389,12 @@ void List<LE>:: reverseSub ( ListNode<LE> *p, ListNode<LE> *nextP )
 
 {
 
-    if (nextP != 0) {
-        ListNode<LE> *temp = nextP->next;
+    if (nextP->next != 0) {
+        reverseSub(nextP, nextP->next);
         nextP->next = p;
-        reverseSub(p->next, nextP);
     } else {
-        head = p;
+        head = nextP;
+        head->next = p;
     }
 
 }
@@ -437,7 +425,9 @@ void List<LE>:: deleteEndSub ( ListNode<LE> *&p )
     if (p->next != 0) {
         deleteEndSub(p->next); 
     } else {
-        List<LE>::remove();
+        delete p;
+        p = 0;
+        counter -= 1;
     }
 }
 
