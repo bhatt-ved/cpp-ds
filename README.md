@@ -9,3 +9,8 @@ Lab 5:  Stack ADT - Both array and linked-list implementations.
 Lab 6:  Queue ADT - Linked list version only
 Lab 7:  Single linked list ADT
 Lab 8:  Double linked list ADT
+Lab 9: Ordered List ADT.
+Lab 10: Recursion. Lab 11 does not exist.
+Lab 12: Binary Tree ADT
+
+Completed the entire course.
